@@ -1,9 +1,14 @@
-const http = reuire("http");
-const server = http.createServer((req, res) => {
+const http = require("http");
+const server = http.createServer(async (req, res) => {
   res.setHeader("Content-Type", "application/json");
   res.statusCode = 200;
-  const data = fetch("https://dummyjson.com/recipes");
+  const data = await fetch("https://dummyjson.com/recipes");
   const datajson = data.json;
+  const dataarray = datajson.recipes;
+  const names = dataarray.map((recipe) => {
+    return recipe.name;
+  });
+  res.end(names);
 });
 server.listen(3001, (err) => {
   try {
